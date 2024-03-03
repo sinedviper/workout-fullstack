@@ -1,113 +1,356 @@
-import Image from "next/image";
+"use client";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useEffect, useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui";
+import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 export default function Home() {
+  const [auth, setAuth] = useState(false);
+
+  const { toast } = useToast();
+
+  const handleToaster = () => {
+    toast({
+      title: "Scheduled: Catch up ",
+      description: "Friday, February 10, 2023 at 5:57 PM",
+      action: <ToastAction altText="Goto schedule to undo">Undo</ToastAction>,
+    });
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className="flex min-h-screen gap-10 max-w-screen-xl flex-col items-center justify-start p-5">
+      <div className={"flex w-full h-auto justify-between items-center"}>
+        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-3xl">
+          Workout System
+        </h1>
+        <div className={"flex gap-5 items-center justify-center"}>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button>Add workout</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle className={"w-full justify-center items-center"}>
+                  Workout create
+                </DialogTitle>
+              </DialogHeader>
+              <div className="flex flex-col gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-left">
+                    Name
+                  </Label>
+                  <Input
+                    id="name"
+                    type={"text"}
+                    value="Denis"
+                    className="col-span-3"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="login" className="text-left">
+                    Description
+                  </Label>
+                  <Textarea
+                    id={"description"}
+                    className="col-span-3 max-h-52"
+                    placeholder="Type your description a workout."
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="password" className="text-left">
+                    Amount of sets
+                  </Label>
+                  <Input
+                    id="amountsets"
+                    type={"text"}
+                    value="5"
+                    className="col-span-3"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="password" className="text-left">
+                    Amount of rets
+                  </Label>
+                  <Input
+                    id="amountrets"
+                    type={"text"}
+                    value="10"
+                    className="col-span-3"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="password" className="text-left">
+                    Link
+                  </Label>
+                  <Input
+                    id="amountrets"
+                    type={"text"}
+                    value="wergwergwergwegrewrgwerg"
+                    className="col-span-3"
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button type="submit" className={"w-full"}>
+                  Add workout
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Avatar className={"cursor-pointer w-12 h-12"}>
+                <AvatarImage src="" alt="profile" />
+                <AvatarFallback>P</AvatarFallback>
+              </Avatar>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle className={"w-full justify-center items-center"}>
+                  {auth ? "Registration" : "Login"}
+                </DialogTitle>
+              </DialogHeader>
+              <div className="flex flex-col gap-4 py-4">
+                {auth ? (
+                  <>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="name" className="text-left">
+                        Name
+                      </Label>
+                      <Input
+                        id="name"
+                        type={"text"}
+                        value="Denis"
+                        className="col-span-3"
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="login" className="text-left">
+                        Login
+                      </Label>
+                      <Input
+                        id="login"
+                        value="sinedviper"
+                        className="col-span-3"
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="password" className="text-left">
+                        Password
+                      </Label>
+                      <Input
+                        id="password"
+                        type={"password"}
+                        value="r3423gf234gf"
+                        className="col-span-3"
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="login" className="text-left">
+                        Login
+                      </Label>
+                      <Input
+                        id="login"
+                        value="sinedviper"
+                        className="col-span-3"
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="password" className="text-left">
+                        Password
+                      </Label>
+                      <Input
+                        id="password"
+                        type={"password"}
+                        value="r3423gf234gf"
+                        className="col-span-3"
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
+              <DialogFooter>
+                <Button type="submit" className={"w-full"}>
+                  {auth ? "Sign-up" : "Enter"}
+                </Button>
+                <Button
+                  type="button"
+                  className={"w-full outline"}
+                  onClick={() => setAuth(!auth)}
+                >
+                  {auth ? "Login" : "Registration"}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+      <div className={"flex flex-col gap-5 w-full"}>
+        <Input
+          className={"w-full cursor-pointer"}
+          placeholder={"Search workout"}
+          onClick={handleToaster}
         />
+        <Table>
+          <TableCaption>A list of workouts.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead className="w-[400px]">Description</TableHead>
+              <TableHead>Amount of Sets</TableHead>
+              <TableHead>Amount of Rets</TableHead>
+              <TableHead className="w-[100px]">Link</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell className="font-medium">system 1 super best</TableCell>
+              <TableCell className="w-[400px]">
+                system system system system system system system system system
+                system system system system system system system system system
+                system system system system system system system system system
+                system system system
+              </TableCell>
+              <TableCell>5</TableCell>
+              <TableCell>10</TableCell>
+              <TableCell className="text-right">
+                <a
+                  target={"_blank"}
+                  rel={"noreferrer"}
+                  className={"decoration-2 cursor-pointer"}
+                >
+                  232323232323232
+                </a>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">system 1 super best</TableCell>
+              <TableCell className="w-[400px]">
+                system system system system system system system system system
+                system system system system system system system system system
+                system system system system system system system system system
+                system system system
+              </TableCell>
+              <TableCell>5</TableCell>
+              <TableCell>10</TableCell>
+              <TableCell className="text-right">
+                <a
+                  target={"_blank"}
+                  rel={"noreferrer"}
+                  className={"decoration-2 cursor-pointer"}
+                >
+                  232323232323232
+                </a>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">system 1 super best</TableCell>
+              <TableCell className="w-[400px]">
+                system system system system system system system system system
+                system system system system system system system system system
+                system system system system system system system system system
+                system system system
+              </TableCell>
+              <TableCell>5</TableCell>
+              <TableCell>10</TableCell>
+              <TableCell className="text-right">
+                <a
+                  target={"_blank"}
+                  rel={"noreferrer"}
+                  className={"decoration-2 cursor-pointer"}
+                >
+                  232323232323232
+                </a>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">system 1 super best</TableCell>
+              <TableCell className="w-[400px]">
+                system system system system system system system system system
+                system system system system system system system system system
+                system system system system system system system system system
+                system system system
+              </TableCell>
+              <TableCell>5</TableCell>
+              <TableCell>10</TableCell>
+              <TableCell className="text-right">
+                <a
+                  target={"_blank"}
+                  rel={"noreferrer"}
+                  className={"decoration-2 cursor-pointer"}
+                >
+                  232323232323232
+                </a>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">system 1 super best</TableCell>
+              <TableCell className="w-[400px]">
+                system system system system system system system system system
+                system system system system system system system system system
+                system system system system system system system system system
+                system system system
+              </TableCell>
+              <TableCell>5</TableCell>
+              <TableCell>10</TableCell>
+              <TableCell className="text-right">
+                <a
+                  target={"_blank"}
+                  rel={"noreferrer"}
+                  className={"decoration-2 cursor-pointer"}
+                >
+                  232323232323232
+                </a>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">system 1 super best</TableCell>
+              <TableCell className="w-[400px]">
+                system system system system system system system system system
+                system system system system system system system system system
+                system system system system system system system system system
+                system system system
+              </TableCell>
+              <TableCell>5</TableCell>
+              <TableCell>10</TableCell>
+              <TableCell className="text-right">
+                <a
+                  target={"_blank"}
+                  rel={"noreferrer"}
+                  className={"decoration-2 cursor-pointer"}
+                >
+                  232323232323232
+                </a>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
 }
