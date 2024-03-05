@@ -39,6 +39,12 @@ export default function Home() {
     });
   };
 
+  useEffect(() => {
+    fetch("http://localhost:3000/api/getWorkouts", { method: "GET" }).then(
+      (res) => console.log(res),
+    );
+  }, []);
+
   return (
     <div className="flex min-h-screen gap-10 max-w-screen-xl flex-col items-center justify-start p-5">
       <div className={"flex w-full h-auto justify-between items-center"}>
