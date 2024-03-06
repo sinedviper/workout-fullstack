@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import cn from "classnames";
 import { Toaster } from "@/components/ui/toaster";
-
+import prisma from "../lib/prisma";
 import "./globals.css";
 
 const fontSans = Inter({

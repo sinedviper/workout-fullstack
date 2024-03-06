@@ -40,9 +40,9 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/getWorkouts", { method: "GET" }).then(
-      (res) => console.log(res),
-    );
+    fetch("http://localhost:3000/api/workoutsSearch?search=werf", {
+      method: "GET",
+    }).then((res) => console.log(res));
   }, []);
 
   return (

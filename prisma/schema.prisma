@@ -14,14 +14,14 @@ datasource db {
 }
 
 model User {
-  id Int        @id
+  id Int @id @default(autoincrement())
   name String
-  login String
+  login String  @unique
   password String
 }
 
 model Workout {
-  id Int @id
+  id Int @id @default(autoincrement())
   name String
   description String
   amountSets String
