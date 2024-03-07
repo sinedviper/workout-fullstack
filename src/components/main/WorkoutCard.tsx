@@ -13,7 +13,7 @@ export const WorkoutCard = ({ workout }: Props): JSX.Element => {
       <TableCell className="w-[400px]">{workout.description}</TableCell>
       <TableCell>{workout.amountSets}</TableCell>
       <TableCell>{workout.amountRets}</TableCell>
-      <TableCell className="text-right">
+      <TableCell>
         <a
           href={workout.link}
           target={"_blank"}
