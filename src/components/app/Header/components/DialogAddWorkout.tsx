@@ -36,6 +36,7 @@ export const DialogAddWorkout = ({ user }: Props): JSX.Element => {
         title: "Please enter all fields",
       });
     } else {
+      setWorkouts({ ...workouts, load: true });
       fetch("/api/workout", {
         method: "POST",
         body: JSON.stringify({

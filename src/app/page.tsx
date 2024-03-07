@@ -1,19 +1,9 @@
 "use client";
 import { useContext, useEffect, useRef, useState } from "react";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { Skeleton } from "@/components/ui";
 import { ThemeData } from "@/hooks";
-import { TState } from "@/types";
+import { WorkoutCard, WorkoutSkeleton, WorkoutWrap } from "@/components/main";
 
 export default function Home() {
   const { toast } = useToast();
@@ -34,7 +24,7 @@ export default function Home() {
         .then((data) => setWorkouts({ load: false, data }))
         .catch(() =>
           toast({
-            title: "Workouts weren't load",
+            title: "Workouts weren't found",
           }),
         );
     }, 800);
@@ -49,7 +39,7 @@ export default function Home() {
       .then((data) => setWorkouts({ load: false, data }))
       .catch(() =>
         toast({
-          title: "Workouts weren't load",
+          title: "Workouts weren't loaded",
         }),
       );
   }, []);
@@ -63,53 +53,13 @@ export default function Home() {
         onChange={handleChangeSearch}
       />
       {workouts.load ? (
-        <div className={"flex flex-col gap-3 w-full"}>
-          <Skeleton className={"w-full h-12"} />
-          <Skeleton className={"w-full h-12"} />
-          <Skeleton className={"w-full h-12"} />
-          <Skeleton className={"w-full h-12"} />
-          <Skeleton className={"w-full h-12"} />
-          <Skeleton className={"w-full h-12"} />
-          <Skeleton className={"w-full h-12"} />
-          <Skeleton className={"w-full h-12"} />
-          <Skeleton className={"w-full h-12"} />
-        </div>
+        <WorkoutSkeleton />
       ) : (
-        <div className={"flex flex-col w-full scroll-auto h-[500px]"}>
-          <Table>
-            <TableCaption>A list of workouts.</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead className="w-[400px]">Description</TableHead>
-                <TableHead>Amount of Sets</TableHead>
-                <TableHead>Amount of Rets</TableHead>
-                <TableHead className="w-[100px]">Link</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {workouts.data.map((workout) => (
-                <TableRow key={workout.id}>
-                  <TableCell className="font-medium">{workout.name}</TableCell>
-                  <TableCell className="w-[400px]">
-                    {workout.description}
-                  </TableCell>
-                  <TableCell>{workout.amountSets}</TableCell>
-                  <TableCell>{workout.amountRets}</TableCell>
-                  <TableCell className="text-right">
-                    <a
-                      target={"_blank"}
-                      rel={"noreferrer"}
-                      className={"decoration-2 cursor-pointer"}
-                    >
-                      {workout.link}
-                    </a>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+        <WorkoutWrap>
+          {workouts.data.map((workout) => (
+            <WorkoutCard workout={workout} key={workout.id} />
+          ))}
+        </WorkoutWrap>
       )}
     </>
   );

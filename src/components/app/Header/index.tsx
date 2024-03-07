@@ -1,5 +1,5 @@
 "use client";
-import { Auth } from "@/components/app/Auth";
+import { Auth } from "./components/Auth";
 
 export const Header = () => {
   return (

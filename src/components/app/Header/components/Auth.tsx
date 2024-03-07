@@ -1,4 +1,4 @@
-import { DialogAddWorkout } from "@/components/app/DialogAddWorkout";
+import { DialogAddWorkout } from "@/components/app/Header/components/DialogAddWorkout";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
