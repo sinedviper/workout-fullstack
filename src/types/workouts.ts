@@ -6,3 +6,5 @@ export type TWorkout = {
   amountRets: string;
   link: string;
 };
+
+export type TState = { load: boolean; data: TWorkout[] };

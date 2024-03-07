@@ -22,7 +22,7 @@ export const DialogAddWorkout = ({ user }: Props): JSX.Element => {
   const { workouts, setWorkouts } = useContext(ThemeData)!;
   const { toast } = useToast();
 
-  const handleCreateWorkout = (e) => {
+  const handleCreateWorkout = (e: any) => {
     e.preventDefault();
     const [name, description, amountsets, amoutrets, link] = e.target;
     if (

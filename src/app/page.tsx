@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { Skeleton } from "@/components/ui";
 import { ThemeData } from "@/hooks";
+import { TState } from "@/types";
 
 export default function Home() {
   const { toast } = useToast();
@@ -21,11 +22,11 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const refSearch = useRef<NodeJS.Timeout | undefined>();
 
-  const handleChangeSearch = (e) => {
+  const handleChangeSearch = (e: any) => {
     clearTimeout(refSearch.current);
     setSearch(e.target.value);
     refSearch.current = setTimeout(() => {
-      setWorkouts((pre) => ({ ...pre, load: true }));
+      setWorkouts({ ...workouts, load: true });
       fetch("/api/workout?search=" + e.target.value, {
         method: "GET",
       })
