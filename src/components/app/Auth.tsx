@@ -27,7 +27,7 @@ export function Auth() {
             <AvatarImage src={user?.picture ?? ""} alt="profile" />
             <AvatarFallback>{user?.given_name?.[0]}</AvatarFallback>
           </Avatar>
-          <LogoutLink>
+          <LogoutLink postLogoutRedirectURL={"/"}>
             <LogOut />
           </LogoutLink>
         </>
