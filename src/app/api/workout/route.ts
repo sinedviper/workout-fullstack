@@ -1,6 +1,6 @@
 import prisma from "../../../lib/prisma";
-import type { NextApiRequest, NextApiResponse } from "next";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { NextRequest } from "next/server";
 
 export async function POST(req: Request) {
   const { getUser } = getKindeServerSession();
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
   return new Response(JSON.stringify(workouts), { status: 200 });
 }
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextRequest) {
   const query = req.nextUrl.searchParams.get("search");
   if (!query) {
     const workouts = await prisma.workout.findMany();
